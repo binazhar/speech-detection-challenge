@@ -1,0 +1,43 @@
+1. For extracting audio features my baseline came from, Maryam Najafian1, Dwight Irvin2, Ying Luo2, Beth S. Rous2, John H. L. Hansen1, "Employing speech and location information for automatic assessment of child
+language environments,"  2016 First International Workshop on Sensing, Processing and Learning for Intelligent Machines (SPLINE). Following features were extracted from the audio:
+- Independent
+ - Mel Frequency Cepstral Coefficients (MFCCs), 0-12th-order Cepstral coefficients, with zeroth cepstral coefficient replaced with the log of the total frame energy.
+ - Log Energy for all frame
+-Dependent / Derivative
+ - Delta variants
+ - Delta-Delta Variants
+
+2. A more sophisticated feature selection can be based on OpenSMILE audio feature extractor, which includes following:
+- Low Level Descriptor
+ - MFCC 0-14
+ - Loudness
+ - logMelFreqBand 0-7
+ - lspFreq from 8 LPC 
+ - Pitch (F0)
+ - Auditory Spectra and PLP coeff
+ - LPC Coefficients
+ - Formants
+ - Associated Functions, stddev, kurtosis, 1,2,3 quartile etc
+ 
+3. My implemntation is based on python_speech_feature library. (Ref: https://github.com/jameslyons/python_speech_features). For calculating MFCC following pre-processing steps are taken:
+- Pre-emphasis with filter coefficient value of 0.97
+- Framing, Segments of 25ms with strides of 10ms between frames
+- Application of Hamming Window function to each frame
+- 512 point FFT
+- Caculaing Power Spectrum
+- Applying 27 Mel-spaced triangular band pass filters
+- Application of Discrete Cosine Transform (DCT) to decorrelate filter bank
+
+4. The given audio is from controlled environment, where child and adult can voices are very distinguishable and there is no noise. Overlapping sounds would create an interesting case for voice detection. I would apply the following:
+
+- Voice Activity Detection (VAD) or Silence Activity Detection (SAD) 
+- Normalization
+
+5. Add To-Combo-SAD or VAD from WebRTC to remove silence frames
+	- Create feature extraction pipeline using DiviMe or Kaldi 
+	- Frame is being truncated, need to fix that 
+
+6. For supervised learning, there would be 13*4 + 1 columns,
+	- 13 Each for MFCCs, log energy, deltas and delta-deltas
+	- Label column, identifying Adult or child
+  We can also look into creating RTTM format for supervised learning

@@ -1,0 +1,46 @@
+1. Using correlation matrix and heatmap generated from it, 
+1. Centroid and meanfreq are exactly correlated (1). A close inspection of columns indicates that both all equal, all 1's. So we can omit centroid column
+Rest of correlation w.r.t label
+Highly Correlated - Positive
+ - IQR 
+ - sp.ent (Spectral Entropy)
+ - sd
+
+Highly Correlated - Negative
+ - Q25
+ - meanfun
+
+Moderately Correlated - Positive 
+ - sfm
+
+Moderately Correlated - Negative 
+ - meanfreq
+ - median
+ - centroid (same as meanfreq)
+
+Very weak / non extent corelation
+ - Q75
+ - skew
+ - kurt
+ - modindx
+
+2. Using Logistic Regression Model from sklearn library
+
+Logistic Regression Classification Test Accuracy 0.9684542586750788
+Logistic Regression Classification Train Accuracy 0.9715832205683356
+
+3. Using other K-Near Neighbor, Support Vector, Decision Tree, and Random Forest Model 
+KNN Classification Test Accuracy 0.9758149316508938
+KNN Classification Train Accuracy 0.9846639603067208
+SVC Classification Test Accuracy 0.9737118822292324
+SVC Classification Train Accuracy 0.9801533603969328
+Decision Tree Classification Test Accuracy 0.9705573080967402
+Decision Tree Classification Train Accuracy 1.0
+Random Forest Classification Test Accuracy 0.9779179810725552
+Random Forest Classification Train Accuracy 1.0
+
+Questions
+1. I dropped features which were identical or had minimum correlation with label 'centroid','Q75','skew', 'kurt','modindx'. However improvement was minimal 
+2. Outlier analysis would help in improving the results
+3. Sklearn library is widely used in real life therefore i believe this model along with others should perform well in real world too. On technical side, we would need to consider whether voice diarization is offline or online. Also the platform where the analysis is being done. If the device has restricted resource, such as memory or processing power, we might have to adapt accordingly. 
+4. I am assuming that my starting point would be same, i.e. a file with feature list and label. My starting point would be same, gradually improving over results through feature engineering, data and confusion matrix analysis if the predefined models does not adpat well. Haven't done of these steps here as the prediction rate was already above the desired threshhold of 80%. 
